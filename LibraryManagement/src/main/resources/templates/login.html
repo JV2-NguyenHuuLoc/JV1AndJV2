@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="vi">
+<!--begin::Head-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>HỆ THỐNG THƯ VIỆN | Đăng Nhập</title>
+
+  <!--begin::Accessibility Meta Tags-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+  <!--end::Accessibility Meta Tags-->
+
+  <!--begin::Primary Meta Tags-->
+  <meta name="title" content="Hệ Thống Quản Lý Thư Viện - Đăng Nhập" />
+  <meta name="author" content="Nguyen Huu Loc" />
+  <meta name="description" content="Hệ thống quản lý thư viện bọc giáp Java Core - Spring Boot." />
+  <!--end::Primary Meta Tags-->
+
+  <!--begin::Link CSS Nội bộ chuẩn Spring Boot (Viết thường chữ css)-->
+  <link rel="preload" href="/css/adminlte.css" as="style" />
+  <link rel="stylesheet" href="/css/overlayscrollbars.min.css" />
+  <link rel="stylesheet" href="/css/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/css/adminlte.css" />
+  <!--end::Link CSS-->
+
+  <!--begin::Fonts Hệ thống an toàn-->
+  <style>
+    body, html {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    }
+  </style>
+  <!--end::Fonts-->
+</head>
+<!--end::Head-->
+
+<!--begin::Body-->
+<body class="login-page bg-body-secondary">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>THƯ VIỆN XXX</b></a>
+    </div>
+    <!-- /.login-logo -->
+    
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Đăng nhập hệ thống quản lý</p>
+
+        <!-- Form trỏ về xử lý login của Spring Security / Spring Boot -->
+        <form action="/login" method="post">
+          
+          <!-- Ô nhập tài khoản (Đã thêm thuộc tính name) -->
+          <div class="input-group mb-3">
+            <input type="text" name="username" class="form-control" placeholder="Tài khoản / Email" required />
+            <div class="input-group-text">
+              <span class="bi bi-envelope"></span>
+            </div>
+          </div>
+          
+          <!-- Ô nhập mật khẩu (Đã thêm thuộc tính name) -->
+          <div class="input-group mb-3">
+            <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required />
+            <div class="input-group-text">
+              <span class="bi bi-lock-fill"></span>
+            </div>
+          </div>
+          
+          <!--begin::Row-->
+          <div class="row">
+            <div class="col-8">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="remember-me" id="rememberMe" />
+                <label class="form-check-label" for="rememberMe"> Ghi nhớ đăng nhập </label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-block">ĐĂNG NHẬP</button>
+              </div>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!--end::Row-->
+        </form>
+
+        <!-- Đã lọc bỏ sạch phần đăng nhập mạng xã hội và link thừa -->
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- Các script xử lý giao diện tối ưu đường dẫn nội bộ -->
+  <script src="/js/adminlte.js"></script>
+  
+  <script>
+    // Tự động kích hoạt cấu hình giao diện Sáng/Tối hệ thống
+    (() => {
+      'use strict';
+      const prefersDark = () => globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-bs-theme', prefersDark() ? 'dark' : 'light');
+    })();
+  </script>
+</body>
+<!--end::Body-->
+</html>
