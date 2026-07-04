@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Chi tiết sản phẩm')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container py-5" th:if="${product != null}">
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <!-- 1. Bọc một hộp div có style overflow-hidden bên ngoài để khi ảnh phóng to không bị tràn vỡ khung -->
+            <div class="rounded shadow overflow-hidden" style="width: 100%;">
+                <!-- 2. Cấy thêm style transition vào thẻ ảnh để khi rà chuột ảnh phóng to ra một cách mịn màng -->
+                <!-- 3. Cắm thêm id="mainProductImg" vào thẻ ảnh chính -->
+                <img id="mainProductImage" th:src="${product.thumbnail}" th:alt="${product.title}"
+                     class="img-fluid detail-img" alt="product"
+                     style="transition: transform 0.4s ease; cursor: zoom-in"/>
+            </div>
+            <div class="row g-2 mt-2" th:if="${product.images != null}">
+                <!-- Cấy thêm thuộc tính onclick và style bàn tay click chuột -->
+                <div class="col-4" th:each="image : ${product.images}">
+                    <img th:src="${image}" class="img-fluid rounded border" alt="gallery"
+                    onclick="changeImage(this.src)" style="cursor: pointer;"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <span class="badge bg-success mb-2" th:text="${product.category}">category</span>
+            <h1 class="fw-bold" th:text="${product.title}">Title</h1>
+            <p class="text-muted" th:text="${product.description}">Description</p>
+            <h2 class="text-success fw-bold" th:text="'$' + ${product.price}">$0</h2>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item" th:if="${product.brand != null}">
+                    <strong>Thương hiệu:</strong> <span th:text="${product.brand}">brand</span>
+                </li>
+                <li class="list-group-item" th:if="${product.rating != null}">
+                    <strong>Đánh giá:</strong> <span th:text="${product.rating}">0</span> / 5
+                </li>
+                <li class="list-group-item" th:if="${product.stock != null}">
+                    <strong>Tồn kho:</strong> <span th:text="${product.stock}">0</span>
+                </li>
+                <li class="list-group-item" th:if="${product.discountPercentage != null}">
+                    <strong>Giảm giá:</strong> <span th:text="${product.discountPercentage} + '%'">0%</span>
+                </li>
+                <li class="list-group-item" th:if="${product.sku != null}">
+                    <strong>SKU:</strong> <span th:text="${product.sku}">sku</span>
+                </li>
+                <li class="list-group-item" th:if="${product.warrantyInformation != null}">
+                    <strong>Bảo hành:</strong> <span th:text="${product.warrantyInformation}">-</span>
+                </li>
+                <li class="list-group-item" th:if="${product.shippingInformation != null}">
+                    <strong>Vận chuyển:</strong> <span th:text="${product.shippingInformation}">-</span>
+                </li>
+                <li class="list-group-item" th:if="${product.returnPolicy != null}">
+                    <strong>Đổi trả:</strong> <span th:text="${product.returnPolicy}">-</span>
+                </li>
+            </ul>
+            <div class="d-flex gap-2">
+                <a th:href="@{/home}" class="btn btn-outline-secondary">Quay lại</a>
+                <a th:href="@{/product_edit(id=${product.id})}" class="btn btn-success">Sửa sản phẩm</a>
+                <button type="button" id="deleteBtn" class="btn btn-outline-danger"
+                        th:attr="data-product-id=${product.id}">Xóa sản phẩm</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+<script th:src="@{/js/product-detail.js}"></script>
+</body>
+</html>

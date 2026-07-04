@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Danh sách User')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main>
+    <h1>Quản lý User</h1>
+    <p class="success" th:if="${message}" th:text="${message}"></p>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+
+    <div class="toolbar">
+        <a class="btn" th:href="@{/v1/users/new}">+ Thêm User mới</a>
+
+        <form class="search-form" method="get" th:action="@{/v1/users}">
+            <input type="search" name="q" placeholder="Tìm theo họ, tên, email, SĐT..."
+                   th:value="${q}"/>
+            <button type="submit">Tìm kiếm</button>
+            <a th:if="${!#strings.isEmpty(q)}" th:href="@{/v1/users}">Xóa bộ lọc</a>
+        </form>
+    </div>
+
+    <p class="meta" th:if="${userPage.totalItems > 0}">
+        Hiển thị <strong th:text="${userPage.users.size()}">5</strong> /
+        <strong th:text="${userPage.totalItems}">12</strong> user
+        <span th:if="${!#strings.isEmpty(q)}"> — kết quả cho "<span th:text="${q}"></span>"</span>
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Avatar</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Điện thoại</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${users}">
+            <td>
+                <img class="avatar" width="48" height="48" alt="avatar"
+                     th:src="${!#strings.isEmpty(u.avatarUrl) ? u.avatarUrl : '/images/default-avatar.webp'}"/>
+            </td>
+            <td th:text="${u.fullName}">Họ tên</td>
+            <td th:text="${u.email}">email</td>
+            <td th:text="${u.phone}">phone</td>
+            <td class="actions">
+                <a th:href="@{/v1/users/{id}(id=${u.id})}">Xem</a>
+                <a th:href="@{/v1/users/{id}/edit(id=${u.id})}">Sửa</a>
+                <form th:action="@{/v1/users/{id}/delete(id=${u.id})}" method="post">
+                    <button type="submit" onclick="return confirm('Xóa user này?')">Xóa</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(users)}">
+            <td colspan="5">
+                <span th:if="${!#strings.isEmpty(q)}">Không tìm thấy user phù hợp.</span>
+                <span th:if="${#strings.isEmpty(q)}">Chưa có user.</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav class="pagination" th:if="${userPage.totalPages > 1}">
+        <a th:if="${userPage.hasPrevious()}"
+           th:href="@{/v1/users(page=${userPage.page - 1}, q=${q})}">« Trước</a>
+
+        <a th:each="p : ${#numbers.sequence(1, userPage.totalPages)}"
+           th:href="@{/v1/users(page=${p}, q=${q})}"
+           th:text="${p}"
+           th:classappend="${p == userPage.page} ? ' active' : ''">1</a>
+
+        <a th:if="${userPage.hasNext()}"
+           th:href="@{/v1/users(page=${userPage.page + 1}, q=${q})}">Sau »</a>
+    </nav>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

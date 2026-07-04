@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${title}">User Management</title>
+    <link rel="stylesheet" th:href="@{/css/users.css}"/>
+</head>
+<body>
+<header th:fragment="header">
+    <br>
+    <nav>
+        <a th:href="@{/v1/users}">Danh sách User</a>
+        <a th:href="@{/v1/users/new}">+ Thêm User</a>
+    </nav>
+</header>
+<footer th:fragment="footer">
+    <p>&copy; 2026 NGUYỄN HỮU LỘC — Spring Boot MVC (Bài 8)</p>
+</footer>
+</body>
+</html>

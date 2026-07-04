@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${isEdit} ? 'Sửa User' : 'Thêm User')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main>
+    <h1 th:text="${isEdit} ? 'Sửa User' : 'Thêm User mới'">Form</h1>
+    <p class="error" th:if="${uploadError}" th:text="${uploadError}"></p>
+
+    <form th:action="${isEdit} ? @{/v1/users/{id}(id=${userForm.id})} : @{/v1/users}"
+          th:object="${userForm}"
+          method="post"
+          enctype="multipart/form-data">
+
+        <div>
+            <label>Họ:</label>
+            <input type="text" th:field="*{firstName}"/>
+            <p class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+        </div>
+        <div>
+            <label>Tên:</label>
+            <input type="text" th:field="*{lastName}"/>
+            <p class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+        </div>
+        <div>
+            <label>Email:</label>
+            <input type="email" th:field="*{email}"/>
+            <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+        <div>
+            <label>Điện thoại:</label>
+            <input type="text" th:field="*{phone}"/>
+            <p class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+        </div>
+        <div>
+            <label>Avatar:</label>
+            <input type="file" name="avatar" accept="image/*"/>
+            <p th:if="${!#strings.isEmpty(userForm.avatarUrl)}">
+                Ảnh hiện tại:
+                <img th:src="${userForm.avatarUrl}" width="64" height="64" class="avatar" alt="current"/>
+            </p>
+        </div>
+
+        <button type="submit" th:text="${isEdit} ? 'Cập nhật' : 'Tạo mới'">Submit</button>
+        <a th:href="@{/v1/users}">Hủy</a>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

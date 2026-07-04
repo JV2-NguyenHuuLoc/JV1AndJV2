@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Nhóm sản phẩm')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<header class="page-header">
+    <div class="container">
+        <h1 class="display-5 fw-bold text-success">Nhóm sản phẩm</h1>
+        <p class="lead text-muted">Danh sách category từ DummyJSON</p>
+    </div>
+</header>
+
+<main class="container py-4">
+    <div class="row g-3">
+        <div class="col-md-6 col-lg-4" th:each="category : ${categories}">
+            <div class="card category-card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-success" th:text="${category.name}">Category name</h5>
+                    <p class="card-text text-muted mb-1">
+                        <strong>Slug:</strong>
+                        <span th:text="${category.slug}">slug</span>
+                    </p>
+                    <a th:href="@{/home(category=${category.slug})}" class="btn btn-sm btn-success">
+                        Xem sản phẩm
+                    </a>
+                    <a th:href="${category.url}" class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener">
+                        Xem API
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

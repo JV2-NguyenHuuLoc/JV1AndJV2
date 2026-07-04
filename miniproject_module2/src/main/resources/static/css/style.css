@@ -1,0 +1,84 @@
+:root {
+    --fruit-green: #198754;
+    --fruit-orange: #fd7e14;
+    --fruit-light: #f8f9fa;
+}
+
+body {
+    background-color: var(--fruit-light);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.page-header {
+    background: linear-gradient(135deg, #d1e7dd 0%, #fff3cd 100%);
+    padding: 3rem 0;
+    margin-bottom: 1rem;
+}
+
+.product-card {
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12) !important;
+}
+
+.product-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.detail-img {
+    max-height: 420px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.category-card {
+    border-left: 4px solid var(--fruit-green);
+}
+
+.empty-state {
+    padding: 3rem 1rem;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.search-form {
+    min-width: 220px;
+    max-width: 320px;
+}
+
+.search-form .form-control {
+    max-width: 220px;
+}
+
+.pagination .page-link {
+    color: var(--fruit-green);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--fruit-green);
+    border-color: var(--fruit-green);
+    color: #fff;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+/* Khi người dùng rà chuột (hover) vào hộp chứa, ép thẻ ảnh chính phóng to lên 1.3 lần */
+.overflow-hidden:hover #mainProductImage{
+    transform: scale(1.3);
+}

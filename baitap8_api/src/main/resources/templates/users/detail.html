@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Chi tiết User')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main>
+    <h1 th:text="${user.fullName}">Họ tên</h1>
+    <img class="avatar-large" width="120" height="120" alt="avatar"
+         th:src="${!#strings.isEmpty(user.avatarUrl) ? user.avatarUrl : '/images/default-avatar.webp'}"/>
+    <ul>
+        <li>Email: <span th:text="${user.email}"></span></li>
+        <li>Điện thoại: <span th:text="${user.phone}">—</span></li>
+        <li>ID: <span th:text="${user.id}"></span></li>
+    </ul>
+    <a th:href="@{/v1/users/{id}/edit(id=${user.id})}">Sửa</a>
+    <a th:href="@{/v1/users}">← Quay lại</a>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
