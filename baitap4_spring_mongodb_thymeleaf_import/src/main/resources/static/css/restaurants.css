@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0 1rem 2rem;
+}
+
+nav a {
+    margin-right: 1rem;
+}
+
+main {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.success {
+    color: #060;
+}
+
+.toolbar {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.status {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #cde;
+    background: #f3f8ff;
+}
+
+.pagination {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination a {
+    padding: 0.35rem 0.65rem;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #286CB5;
+    border-radius: 4px;
+}
+
+.pagination .current {
+    padding: 0.35rem 0.65rem;
+    background: #286CB5;
+    color: #fff;
+    border-radius: 4px;
+}
+
+form input[type="text"] {
+    padding: 0.35rem;
+}
+
+button {
+    padding: 0.45rem 0.9rem;
+    cursor: pointer;
+}
+
+/* =========================================================================
+   HẠ TẦNG NÂNG CẤP: BỘ LỌC BỔ TRỢ ĐỒ HỌA CHỐNG XUNG ĐỘT BOOTSTRAP 5 OFFLINE 
+   ========================================================================= */
+
+/* 1. Thiết lập lại phom chữ phẳng sạch và làm mịn các góc cạnh card bo tròn */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 2. Bảo hiểm chống bể khung bảng dữ liệu khi xem trên thiết bị di động */
+.table-responsive {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* 3. Định hình lại bộ nút lật trang hệ thống phẳng lỳ, co giãn mượt mà */
+.pagination .page-link {
+    color: #286CB5 !important;
+    border-color: #dee2e6 !important;
+}
+
+.pagination .active .page-link {
+    background-color: #286CB5 !important;
+    border-color: #286CB5 !important;
+    color: #fff !important;
+}
+
+/* 4. Đúc khuôn đồ họa riêng cho khung hiển thị trạng thái Nạp lô (Batch Upload) */
+.alert-info {
+    background-color: #e3f2fd !important;
+    color: #0d47a1 !important;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- GÀI TẤM KHIÊN BẢO HIỂM TOÀN CỤC TRÊN THẺ HTML VÀ BODY -->
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" style="overflow-x: hidden !important; width: 100% !important;">
+
+<head th:fragment="head(title)">
+    <meta charset="UTF-8" />
+    <!-- THẺ ÉP ĐỒ HỌA CO GIÃN ĐIỆN THOẠI [2.2] -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title th:text="${title}">Hệ Thống Nhà Hàng New York</title>
+    <!-- Bốc trực tiếp tệp tĩnh CSS ngoại vi phẳng sạch dưới đĩa cứng vật lý -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/restaurants.css}" />
+</head>
+
+<!-- ÉP CỨNG CHÙA KHÓA KHUNG CHỐNG TRƯỢT NGANG CHO TOÀN BỘ CƠ THỂ TRANG WEB -->
+
+<body class="bg-light" style="overflow-x: hidden !important; width: 100% !important;">
+
+    <header th:fragment="header">
+        <!-- THANH ĐIỀU HƯỚNG ĐỈNH TRANG CỐ ĐỊNH CHUẨN BOOTSTRAP 5 -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm" style="width: 100% !important;">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-warning" th:href="@{/restaurants}">NYC RESTAURANT</a>
+
+                <!-- BỦA CHỐNG BỂ LAYOUT TRÊN MOBILE: Cho phép menu tự động xếp dòng dọc mượt mà -->
+                <div class="navbar-nav ms-auto gap-2 flex-row flex-wrap mt-2 mt-lg-0 justify-content-end">
+                    <a class="nav-link text-white bg-secondary px-3 rounded shadow-sm fw-bold small py-2"
+                        th:href="@{/restaurants}">
+                        📋 Danh Sách
+                    </a>
+                    <a class="nav-link text-white bg-success px-3 rounded shadow-sm fw-bold small py-2"
+                        th:href="@{/restaurants/upload}">
+                        🚀 Nạp File Lô
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CHÂN TRANG FOOTER BẢN QUYỀN ĐƯỢC BẢO HIỂM CHỐNG TRANH CHẤP BIÊN DỮ LIỆU -->
+    <footer th:fragment="footer" class="container text-center py-4 my-4 border-top text-muted"
+        style="max-width: 100% !important;">
+        <p class="mb-0 text-wrap">&copy; 2026 - Nguyễn Hữu Lộc — Bài tập 4.Module 3: Spring
+            Boot-MongoDB-Thymeleaf-Import</p>
+    </footer>
+
+</body>
+
+</html>

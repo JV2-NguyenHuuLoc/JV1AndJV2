@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <!-- TRỎ ỐNG DẪN: Kéo mảnh ghép head kẹp link file CSS offline vật lý dưới đĩa cứng [2.2] -->
+    <th:block th:replace="~{/fragments/layout :: head('Danh sách Restaurant')}"></th:block>
+</head>
+
+<body>
+    <!-- KÉO MẢNH GHÉP: Thanh điều hướng menu đỉnh từ căn kho layout tổng [2.2] -->
+    <header th:replace="~{/fragments/layout :: header}"></header>
+
+    <main layout:fragment="content" class="mt-4">
+        <!-- CARD LỚP ÁO ĐỒ HỌA BOOTSTRAP 5 SHADOW MỊN MÀNG BO TRÒN GÓC CẠNH [2.2] -->
+        <div class="card shadow-sm border-0 p-4 mb-4 bg-white rounded-3">
+            <h1 class="mb-4 fw-bold text-primary text-center">📋 DANH SÁCH NHÀ HÀNG NEW YORK</h1>
+            <p class="alert alert-success border-0 shadow-sm mb-4" th:if="${message}" th:text="${message}"></p>
+
+            <!-- THANH CÔNG CỤ TÌM KIẾM KÉP RESPONSIVE CO GIÃN THEO ĐIỂM GÃY MD VÀ TIÊM ROW-GAP-2 CHỐNG BỂ VIỀN [2.2] -->
+            <div class="row g-3 row-gap-2 align-items-center justify-content-between mb-4 flex-wrap">
+                <div class="col-12 col-md-8">
+                    <form th:action="@{/restaurants}" method="get" class="d-flex gap-2 flex-wrap">
+                        <input type="hidden" name="sortBy" th:value="${sortBy}" />
+                        <input type="hidden" name="dir" th:value="${dir}" />
+                        <input type="text" name="borough" th:value="${borough}"
+                            class="form-control border-2 flex-grow-1" style="min-width: 180px;"
+                            placeholder="📍 Lọc theo Quận (Ví dụ: Brooklyn)..." />
+                        <input type="text" name="name" th:value="${name}" class="form-control border-2 flex-grow-1"
+                            style="min-width: 180px;" placeholder="🏢 Tìm theo Tên Nhà Hàng..." />
+                        <button type="submit" class="btn btn-primary fw-bold px-4 shadow-sm">🔍 Tìm Kiếm Kép</button>
+                    </form>
+                </div>
+                <div class="col-12 col-md-auto text-end">
+                    <div class="btn-group shadow-sm" role="group">
+                        <a th:classappend="${sortBy == 'name' && dir == 'asc'} ? 'btn-primary' : 'btn-outline-primary'"
+                            th:href="@{/restaurants(page=0, borough=${borough}, name=${name}, sortBy='name', dir='asc')}"
+                            class="btn fw-bold">A → Z</a>
+                        <a th:classappend="${sortBy == 'name' && dir == 'desc'} ? 'btn-primary' : 'btn-outline-primary'"
+                            th:href="@{/restaurants(page=0, borough=${borough}, name=${name}, sortBy='name', dir='desc')}"
+                            class="btn fw-bold">Z → A</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TẤM KHIÊN BẢO HIỂM TỐI CAO: Ép cứng khung chứa bắt buộc phải sinh thanh cuộn ngang nội bộ phẳng sạch [2.2] -->
+            <div class="table-responsive shadow-sm rounded border"
+                style="overflow-x: auto !important; display: block !important; width: 100% !important;">
+
+                <!-- BẺ KHÓA RESPONSIVE DI ĐỘNG: Định vị cứng min-width 900px kẹp text-nowrap để ép bảng phình rộng vượt màn hình di động [2.2] -->
+                <table class="table table-hover table-striped align-middle mb-0 text-nowrap"
+                    style="min-width: 950px !important; table-layout: auto !important;">
+
+                    <!-- MẸO 1: Tiêu đề đứng im thẳng tắp một hàng, chữ to rõ nét cấm tự ý xuống dòng [2.2] -->
+                    <thead class="table-dark text-nowrap">
+                        <tr>
+                            <!-- MẸO 2: Phân chia tỷ lệ % vàng định vị diện tích cho từng cột không bị bóp méo khi cuộn [2.2] -->
+                            <th scope="col" style="width: 12%">Mã Số NYC</th>
+                            <th scope="col" style="width: 25%">Tên Nhà Hàng</th>
+                            <th scope="col" style="width: 35%">Địa Chỉ &amp; Tọa Độ Bản Đồ</th>
+                            <th scope="col" style="width: 13%">Quận Huyện</th>
+                            <th scope="col" style="width: 15%">Thể Loại Ẩm Thực</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-secondary">
+                        <tr th:each="r : ${list}">
+                            <td class="fw-bold">
+                                <a th:href="@{/restaurants/detail/{id}(id=${r.restaurantId})}"
+                                    class="text-decoration-none text-primary">
+                                    🚀 <span th:text="${r.restaurantId}">ID</span>
+                                </a>
+                            </td>
+                            <td>
+                                <div class="fw-bold text-dark" th:text="${r.name}">Name</div>
+                                <div class="mt-1 small">
+                                    <span class="badge bg-warning text-dark fw-bold">⭐ <span
+                                            th:text="${r.averageScore}">0.0</span></span>
+                                    <span class="text-muted ms-1">(<span th:text="${r.totalGrades}">0</span> lượt đánh
+                                        giá)</span>
+                                </div>
+                            </td>
+                            <td>
+                                <!-- MẸO 3: text-wrap kết hợp max-width bọc lót để địa chỉ tự động cuộn dọc gọn gàng trong ô [2.2] -->
+                                <p class="mb-1 text-dark text-wrap"
+                                    style="max-width: 320px !important; white-space: normal !important;"
+                                    th:text="${r.fullAddress}">Địa chỉ văn bản thô</p>
+
+                                <!-- B B B BẺ KHÓA TUYỆT ĐỐI TRANG LIST: Thuật toán kiểm tra tiền tố tự động [2.2] -->
+                                <small class="text-muted d-block" th:if="${r.mapUrl != null && !r.mapUrl.isEmpty()}">
+                                    <!-- Dùng toán tử điều kiện: Nếu bắt đầu bằng 'http' thì giữ nguyên, ngược lại mới nối chuỗi 'https://' [2.2] -->
+                                    <a th:attr="href=${#strings.startsWith(r.mapUrl, 'http')} ? ${r.mapUrl} : 'https://' + ${r.mapUrl}"
+                                        target="_blank" class="text-decoration-none text-danger fw-bold shadow-hover">
+                                        📌 Vị trí định vị:
+                                        <span class="badge bg-danger text-white small ms-1 py-1 px-2 rounded-pill">🗺️
+                                            Bản Đồ Dẫn Đường</span>
+                                    </a>
+                                    <br />
+                                    <small th:if="${r.coord != null && r.coord.size() >= 2}">
+                                        📌 Tọa độ định vị:
+                                        <code class="bg-white border rounded px-1 text-primary fw-bold"
+                                            th:text="${r.coord}">Kinh độ - vĩ độ</code>
+                                    </small>
+                                </small>
+
+                            </td>
+                            <td class="text-nowrap" th:text="${r.borough}">Borough</td>
+                            <td th:text="${r.cuisine}">Cuisine</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(list)}">
+                            <td colspan="5" class="text-center py-5 text-muted fw-bold">
+                                📭 Trận địa trống! Chưa có dữ liệu nhà hàng New York dưới đĩa cứng.
+                                Hãy <a th:href="@{/restaurants/upload}" class="link-primary text-decoration-none">click
+                                    vào đây để nạp file lô</a>.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- THANH PHÂN TRANG CỬA SỔ DI ĐỘNG KHÔNG BỊ NUỐT BIẾN TÌM KIẾM -->
+            <div class="d-flex justify-content-center mt-4" th:if="${totalPages > 1}">
+                <nav aria-label="Pagination Navigation">
+                    <ul class="pagination shadow-sm mb-0">
+                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                            <a class="page-link fw-bold"
+                                th:href="@{/restaurants(page=${currentPage - 1}, borough=${borough}, name=${name}, sortBy=${sortBy}, dir=${dir})}">Prev</a>
+                        </li>
+                        <li class="page-item" th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
+                            th:classappend="${pageNum == currentPage} ? 'active'">
+                            <a class="page-link fw-bold" th:if="${pageNum != currentPage}"
+                                th:href="@{/restaurants(page=${pageNum}, borough=${borough}, name=${name}, sortBy=${sortBy}, dir=${dir})}"
+                                th:text="${pageNum + 1}">1</a>
+                            <span class="page-link fw-bold" th:if="${pageNum == currentPage}"
+                                th:text="${pageNum + 1}">1</span>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage >= totalPages - 1} ? 'disabled'">
+                            <a class="page-link fw-bold"
+                                th:href="@{/restaurants(page=${currentPage + 1}, borough=${borough}, name=${name}, sortBy=${sortBy}, dir=${dir})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <!-- KÉO MẢNH GHÉP: Thanh chân trang footer từ căn kho layout tổng [2.2] -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <!-- NẠP THƯ VIỆN LOGIC ĐIỀU KHIỂN JS BOOTSTRAP 5 OFFLINE [2.2] -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

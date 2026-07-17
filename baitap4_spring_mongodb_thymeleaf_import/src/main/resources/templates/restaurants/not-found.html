@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- MƯỢN XƯƠNG LAYOUT TỔNG: Kéo mảnh ghép cấu hình đầu bảng CSS Offline -->
+    <th:block th:replace="~{fragments/layout :: head('Không tìm thấy')}"></th:block>
+</head>
+
+<body class="bg-light">
+
+    <!-- KÉO MẢNH GHÉP: Menu điều hướng đỉnh trang từ kho chứa layout -->
+    <header th:replace="~{fragments/layout :: header}"></header>
+
+    <main class="container mt-5">
+        <!-- KHỐI ROW RESPONSIVE ĐẢM BẢO CHỐT CHẶN CO GIÃN THEO TỶ LỆ PHỄU SẠCH LƯỚI TRÊN MOBILE [2.2] -->
+        <div class="row justify-content-center mx-1">
+            <div class="col-12 col-md-8 col-lg-6 text-center px-0">
+
+                <!-- LỚP ÁO ĐỒ HỌA BOOTSTRAP 5: Khung hộp Card bo tròn đổ bóng mịn bo khít lề trên di động [2.2] -->
+                <div class="card shadow-sm border-0 p-4 p-sm-5 bg-white rounded-3">
+
+                    <!-- VÁ ĐỒ HỌA MÔI TRƯỜNG: Thay biển cảnh báo thô thành mã số vạn năng ⚠ -->
+                    <div class="text-warning display-1 mb-3">⚠</div>
+                    <h1 class="mb-3 fw-bold text-danger fs-3 fs-sm-2">Restaurant không tồn tại</h1>
+
+                    <!-- LỚP CHỮ KHƠI THÔNG DÒNG MÁU TEXT-WRAP TỰ ĐỘNG CUỘN DỌC HẠ TẦNG [2.2] -->
+                    <p class="text-secondary fs-6 fs-sm-5 mb-4 text-wrap">Mã số restaurant_id bạn truy cập hiện không có
+                        trong hệ thống dữ liệu đĩa cứng [2.2].</p>
+
+                    <!-- CHỐT CHẶN HẠ TẦNG UI: Nút bấm điều hướng hành động quay về [2.2] -->
+                    <div class="d-grid gap-2 justify-content-center w-100">
+                        <!-- VÁ ĐỒ HỌA MÔI TRƯỜNG: Thay mũi tên lùi thô thành mã số vạn năng ⬅ -->
+                        <a th:href="@{/restaurants}"
+                            class="btn btn-outline-secondary btn-lg px-4 px-sm-5 fw-bold shadow-sm py-2.5 small">
+                            ⬅ Quay Lại Bảng Danh Sách
+                        </a>
+                    </div>
+
+                </div> <!--/* KẾT THÚC THẺ ĐÓNG CARD CẢNH BÁO */-->
+            </div> <!--/* KẾT THÚC KHỐI COL */-->
+        </div> <!--/* KẾT THÚC KHỐI ROW */-->
+    </main>
+
+    <!-- KÉO MẢNH GHÉP: Thanh chân trang footer từ căn kho layout tổng -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <!-- NẠP THƯ VIỆN ĐIỀU KHIỂN LOGIC JS OFFLINE -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

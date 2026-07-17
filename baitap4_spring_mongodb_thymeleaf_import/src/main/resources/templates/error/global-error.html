@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- MƯỢN XƯƠNG LAYOUT TỔNG: Kéo mảnh ghép cấu hình đầu bảng CSS Offline -->
+    <th:block th:replace="~{fragments/layout :: head('Sự Cố Hệ Thống Toàn Cục')}"></th:block>
+</head>
+
+<body class="bg-light">
+
+    <!-- KÉO MẢNH GHÉP: Menu điều hướng đỉnh trang từ kho chứa layout -->
+    <header th:replace="~{fragments/layout :: header}"></header>
+
+    <main class="container mt-5">
+        <!-- KHỐI ROW RESPONSIVE ĐẢM BẢO CO GIÃN THEO TỶ LỆ PHỄU SẠCH LƯỚI TRÊN MOBILE [2.2] -->
+        <div class="row justify-content-center mx-1">
+            <div class="col-12 col-md-10 col-lg-8 text-center px-0">
+
+                <!-- THẺ CARD TỔNG TỰ ĐỘNG ĐỔ MÀU THEO MÃ LỖI ĐỘNG ĐỂ TÁI SỬ DỤNG CHO PHÂN HỆ KHÁC -->
+                <div class="card shadow border-0 rounded-3 bg-white p-4 p-sm-5">
+
+                    <!-- VÁ ĐỒ HỌA MÔI TRƯỜNG: Thay còi báo động thô thành mã số vạn năng 🚨 -->
+                    <div class="display-1 text-danger mb-4">🚨</div>
+
+                    <!-- BỐC THỊT DỮ LIỆU ĐỘNG TỪ TRẠM RADAR QUÉT RAM ĐẨY LÊN -->
+                    <h1 class="display-5 fw-bold text-dark mb-2" th:text="${errorCode}">Mã Số Lỗi 500</h1>
+                    <h3 class="fw-bold text-danger mb-4" th:text="${errorTitle}">Tiêu Đề Nhóm Lỗi</h3>
+
+                    <!-- KHUNG CHỨA CHI TIẾT LỖI NGẦM CHO KỸ SƯ TRƯỞNG TRUY VẾT BIẾN CỐ -->
+                    <!-- Ép cứng khung đen khóa chặt chiều ngang, chỉ cho phép cuộn dọc mượt mà khi lỗi quá dài [2.2] -->
+                    <div class="bg-dark text-warning p-3 p-sm-4 rounded-3 text-start shadow-inner mb-4"
+                        style="max-height: 250px; overflow-y: auto !important; overflow-x: hidden !important; width: 100% !important;">
+
+                        <h5 class="fw-bold text-white border-bottom border-secondary pb-2 mb-2">💻 TRACKING TRẦN TRỤI
+                            BIẾN CỐ (ADMIN LOG):</h5>
+
+                        <!-- BẢO HIỂM TỐI CAO: Ép dải mật mã văng lỗi Java dài dằng dặc bắt buộc phải băm nhỏ, tự cuộn dọc chồng dòng 100% [2.2] -->
+                        <pre class="mb-0 text-wrap font-monospace small"
+                            style="word-break: break-all !important; white-space: pre-wrap !important;"
+                            th:text="${errorMessage}">Chi tiết ngăn xếp văng lỗi ngoại lệ...</pre>
+                    </div>
+
+                    <!-- CHỐT CHẶN HẠ TẦNG: Hệ thống cụm nút điều hướng phản hồi nhanh thích ứng di động flex-wrap [2.2] -->
+                    <div class="d-flex gap-2 justify-content-center mt-3 flex-wrap">
+                        <a th:href="@{/restaurants}" class="btn btn-primary btn-lg fw-bold px-4 shadow-sm py-2.5 small">
+                            🏡 Về Trang Chủ Danh Sách
+                        </a>
+                        <a th:href="@{/restaurants/upload}"
+                            class="btn btn-outline-success btn-lg px-4 fw-bold shadow-sm py-2.5 small">
+                            🔄 Thử Lại Tiến Trình Nạp File
+                        </a>
+                    </div>
+
+                </div> <!--/* KẾT THÚC THẺ ĐÓNG CARD LỚP ÁO ĐỒ HỌA TOÀN CỤC */-->
+            </div> <!--/* KẾT THÚC KHỐI COL */-->
+        </div> <!--/* KẾT THÚC KHỐI ROW RESPONSIVE */-->
+    </main>
+
+    <!-- KÉO MẢNH GHÉP: Thanh chân trang footer từ căn kho layout tổng -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <!-- NẠP THƯ VIỆN ĐIỀU KHIỂN LOGIC JS OFFLINE VÀO ĐÁY RAM -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

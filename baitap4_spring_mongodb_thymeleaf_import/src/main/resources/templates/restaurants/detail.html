@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- MƯỢN XƯƠNG LAYOUT TỔNG: Kéo mảnh ghép cấu hình đầu bảng CSS Offline chứa link đĩa cứng Bootstrap 5 -->
+    <th:block th:replace="~{fragments/layout :: head('Chi tiết Restaurant')}"></th:block>
+</head>
+
+<body class="bg-light">
+
+    <!-- KÉO MẢNH GHÉP: Menu điều hướng đỉnh trang từ kho chứa layout -->
+    <header th:replace="~{fragments/layout :: header}"></header>
+
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <!-- LỚP ÁO ĐỒ HỌA BOOTSTRAP 5 SHADOW MỊN MÀNG BO TRÒN GÓC CẠNH -->
+                <div class="card shadow-sm border-0 p-4 mb-4 bg-white rounded-3">
+
+                    <h1 class="mb-4 fw-bold text-primary text-center">📋 CHI TIẾT VÀ CẬP NHẬT NHÀ HÀNG</h1>
+                    <p class="alert alert-success border-0 shadow-sm mb-4" th:if="${message}" th:text="${message}"></p>
+
+                    <form th:action="@{/restaurants/detail/{id}(id=${restaurant.restaurantId})}"
+                        th:object="${restaurant}" method="post" class="needs-validation">
+
+                        <!-- CHỐT CHẶN BẢO HIỂM TỌA ĐỘ VẬT LÝ: Giữ nguyên vẹn mảng coordList của Thầy Khoa không đổi -->
+                        <input type="hidden" th:field="*{coordList}" />
+
+                        <!-- TẤM KHIÊN BẢO HIỂM PHỄU CO GIÃN CHỐT HẠ: Khóa cứng chiều ngang toàn cục, 
+                             ép form tự xếp dọc chồng hàng mượt mà 100% khi lên Mobile/Tablet, cấm tuyệt đối sinh thanh cuộn ngang rác [2.2] -->
+                        <div class="table-responsive" style="overflow-x: hidden !important; width: 100% !important;">
+                            <table class="table table-bordered align-middle bg-white m-0"
+                                style="table-layout: fixed !important; width: 100% !important;">
+                                <tr>
+                                    <td class="fw-bold bg-light text-secondary" style="width: 30%;">Mã số nhà hàng (NYC
+                                        ID):</td>
+                                    <td class="fw-bold text-dark text-wrap" style="word-break: break-all;"
+                                        th:text="*{restaurantId}">RID</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold bg-light text-secondary">Tên thương hiệu:</td>
+                                    <td>
+                                        <input type="text" th:field="*{name}" class="form-control border-2" />
+                                        <div class="text-danger small fw-bold mt-1" th:if="${#fields.hasErrors('name')}"
+                                            th:errors="*{name}">Lỗi tên</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold bg-light text-secondary">Quận hành chính (Borough):</td>
+                                    <td>
+                                        <input type="text" th:field="*{borough}" class="form-control border-2" />
+                                        <div class="text-danger small fw-bold mt-1"
+                                            th:if="${#fields.hasErrors('borough')}" th:errors="*{borough}">Lỗi quận
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold bg-light text-secondary">Phong cách ẩm thực:</td>
+                                    <td>
+                                        <input type="text" th:field="*{cuisine}" class="form-control border-2" />
+                                        <div class="text-danger small fw-bold mt-1"
+                                            th:if="${#fields.hasErrors('cuisine')}" th:errors="*{cuisine}">Lỗi ẩm thực
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- NÂNG CẤP KIẾN TRÚC PHẲNG HÓA ĐỊA CHỈ BÀI TẬP 3 -->
+                                <tr>
+                                    <td class="fw-bold bg-light text-secondary text-primary">Số nhà (Building):</td>
+                                    <td>
+                                        <input type="text" th:field="*{building}"
+                                            class="form-control border-2 border-primary-subtle" />
+                                        <div class="text-danger small fw-bold mt-1"
+                                            th:if="${#fields.hasErrors('building')}" th:errors="*{building}">Lỗi số nhà
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold bg-light text-secondary text-primary">Tên đường (Street):</td>
+                                    <td>
+                                        <input type="text" th:field="*{street}"
+                                            class="form-control border-2 border-primary-subtle" />
+                                        <div class="text-danger small fw-bold mt-1"
+                                            th:if="${#fields.hasErrors('street')}" th:errors="*{street}">Lỗi tên đường
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold bg-light text-secondary text-primary">Mã bưu chính (Zipcode):
+                                    </td>
+                                    <td>
+                                        <input type="text" th:field="*{zipcode}"
+                                            class="form-control border-2 border-primary-subtle" />
+                                        <div class="text-danger small fw-bold mt-1"
+                                            th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}">Lỗi bưu điện
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- TIÊM MỚI Ô NHẬP ĐƯỜNG DẪN BẢN ĐỒ DẪN ĐƯỜNG KÈM NÚT ĐỒ HỌA TĂNG UX TRÊN CÙNG 1 DÒNG [2.2] -->
+                                <tr>
+                                    <td class="fw-bold bg-success-subtle text-success">Google Maps Link:</td>
+                                    <td>
+                                        <!-- Khóa hộp textarea bám dính trường lạc đà mapUrl lên bộ nhớ RAM -->
+                                        <textarea th:field="*{mapUrl}" rows="2"
+                                            class="form-control border-2 border-success-subtle font-monospace small mb-2"
+                                            placeholder="Dán link chuẩn chia sẻ từ Google Maps vào đây..."></textarea>
+
+                                        <!-- B B B BẺ KHÓA TUYỆT ĐỐI TRANG DETAIL: Thuật toán kiểm tra tiền tố đối tượng form [2.2] -->
+                                        <div th:if="${restaurant.mapUrl != null && !restaurant.mapUrl.isEmpty()}">
+                                            <!-- Ép bộ dịch kiểm tra chuỗi chữ thô trong object form trước khi gán thuộc tính href [2.2] -->
+                                            <a th:attr="href=${#strings.startsWith(restaurant.mapUrl, 'http')} ? ${restaurant.mapUrl} : 'https://' + ${restaurant.mapUrl}"
+                                                target="_blank"
+                                                class="btn btn-sm btn-danger fw-bold shadow-sm d-inline-flex align-items-center gap-1 py-1.5 px-3 rounded-pill">
+                                                🗺️ <span>Mở Bản Đồ Dẫn Đường Thực Tế</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- CỤM NÚT ĐIỀU HƯỚNG PHẲNG SẠCH MÃ SỐ VẠN NĂNG -->
+                        <div class="d-flex gap-3 justify-content-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold px-5 shadow-sm">
+                                💾 Xác Nhận Cập Nhật Đĩa Cứng
+                            </button>
+                            <a th:href="@{/restaurants}" class="btn btn-outline-secondary btn-lg px-4">
+                                ⬅ Hủy Bỏ &amp; Quay Lại
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- KÉO MẢNH GHÉP: Thanh chân trang footer từ căn kho layout tổng -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+
+</html>
